@@ -1,0 +1,7 @@
+# pnpm 11 refuses to run a dependency's build script until it is explicitly
+# allowed or declined. esbuild 0.28.2 works without its postinstall (the
+# platform binary ships as an optional dependency, and `esbuild --version`
+# reports 0.28.2 with no build script having run), so it is declined here.
+# Set this to true only if you actually want that script to execute.
+allowBuilds:
+  esbuild: false
