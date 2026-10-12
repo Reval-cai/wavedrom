@@ -6,6 +6,47 @@
 <!-- [![Dependency Status](https://david-dm.org/wavedrom/wavedrom.svg)](https://david-dm.org/wavedrom/wavedrom) -->
 <!-- [![Analytics](https://ga-beacon.appspot.com/UA-21660728-4/wavedrom/readme)](http://wavedrom.com) -->
 
+---
+
+> ### 非官方分支 / Unofficial fork
+>
+> **中文** — 本仓库是 [WaveDrom](https://github.com/wavedrom/wavedrom) 的**非官方分支**，基于上游
+> **3.7.0**（`trunk` @ `142dd41`），由 **Deerczl** 维护。它与原作者 Aliaksei Chapyzhenka 及
+> WaveDrom 项目**无从属关系，也未获其背书**：请勿把本分支的问题反馈给上游，也请勿以原作者名义
+> 宣传本分支。
+>
+> 上游以 **MIT 许可证**发布，本分支**完整保留**原始 [LICENSE](LICENSE) 与版权声明
+> （`Copyright (c) 2011-2026 Aliaksei Chapyzhenka`），本分支新增与修改的部分同样以 **MIT** 发布。
+> 任何再分发都必须保留 `LICENSE`、本说明与上游版权声明，并注明修改内容。
+>
+> **本分支相对上游 3.7.0 的改动**：新增 `latency`（按「一个周期的百分比」的通道延迟，像素级精度）、
+> `config.cursor`（竖直游标线 + 文字标注）、6 个字母色码 `a b c e f g`（低饱和马卡龙色）；
+> 修复字母数据格上 `data` 标注错位、以及 `dist.min` 在 Windows 上失败。详见
+> [CHANGES.md](CHANGES.md)；第三方依赖许可（bit-field、json5、logidrom、onml、tspan，均为 MIT）见
+> [THIRD-PARTY.md](THIRD-PARTY.md)。
+>
+> **English** — This repository is an **unofficial fork** of
+> [WaveDrom](https://github.com/wavedrom/wavedrom), based on upstream **3.7.0**
+> (`trunk` @ `142dd41`) and maintained by **Deerczl**. It is **not affiliated with,
+> nor endorsed by** the original author or the WaveDrom project: please do not
+> report this fork's issues upstream, and do not present it as the original work.
+>
+> Upstream is released under the **MIT licence**; this fork **keeps** the original
+> [LICENSE](LICENSE) and copyright notice
+> (`Copyright (c) 2011-2026 Aliaksei Chapyzhenka`), and its own changes are MIT as
+> well. Any redistribution must keep `LICENSE`, this notice and the upstream
+> copyright notice, and must state what was changed.
+>
+> **Changes over upstream 3.7.0**: added `latency` (per-lane delay as a percentage
+> of one period, pixel resolution), `config.cursor` (vertical cursor lines with
+> text annotations) and six lettered colour codes `a b c e f g` (low-saturation
+> macaron colours); fixed misplaced `data` labels on lettered cells and a
+> Windows-only failure of `dist.min`. See [CHANGES.md](CHANGES.md); third-party
+> dependency licences (bit-field, json5, logidrom, onml, tspan — all MIT) are
+> listed in [THIRD-PARTY.md](THIRD-PARTY.md).
+
+---
+
 [EDITOR](http://wavedrom.com/editor.html) | [TUTORIAL](http://wavedrom.com/tutorial.html)
 
 ## Introduction
