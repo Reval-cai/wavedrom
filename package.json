@@ -1,6 +1,6 @@
 {
   "name": "wavedrom",
-  "version": "3.7.0",
+  "version": "3.7.1-dsh",
   "description": "Digital timing diagram in your browser",
   "homepage": "http://wavedrom.com",
   "author": "alex.drom@gmail.com",
@@ -39,7 +39,7 @@
     "c8": "c8 -r=lcov -r=text mocha test",
     "dist": "esbuild ./lib/wave-drom.js --bundle --format=iife --outfile=wavedrom.js",
     "watch.dist": "esbuild ./lib/wave-drom.js --bundle --format=iife --outfile=wavedrom.js --watch",
-    "dist.min": "node -e \"const banner = require('child_process').execSync('node ./bin/header.js < /dev/null').toString(); require('child_process').execSync('esbuild ./lib/wave-drom.js --bundle --format=iife --minify --outfile=wavedrom.min.js --banner:js=\\\"' + banner.trim() + '\\\"')\"",
+    "dist.min": "node -e \"const banner = require('child_process').execSync('node ./bin/header.js').toString(); require('child_process').execSync('esbuild ./lib/wave-drom.js --bundle --format=iife --minify --outfile=wavedrom.min.js --banner:js=\\\"' + banner.trim() + '\\\"')\"",
     "unpkg": "node ./bin/unpkg.js",
     "unpkg.min": "node ./bin/unpkg.js --minify",
     "prepare": "npm run test && npm run dist && npm run dist.min && npm run unpkg && npm run unpkg.min",
