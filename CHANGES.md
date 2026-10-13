@@ -1,4 +1,4 @@
-# Changes in this fork — 3.7.2-dsh
+# Changes in this fork — 3.7.3-dsh
 
 Based on upstream `wavedrom/wavedrom` 3.7.0 (`trunk` @ `142dd41`). Licence stays
 MIT; the items below are the only differences from upstream.
@@ -49,6 +49,10 @@ config: { cursor: [
 
 ## Fixed
 
+* Equal neighbouring letters (`x.ccx`, e.g. `x.axbxccefgx`) missed the `vmv-c-c`
+  connector glyph - the numeric codes use `vmv-5-5` there and the skin has it.
+  Equal pairs are cloned from the skin's own equal-pair template now, so `x.ccx`
+  matches `x.55x` exactly.
 * Lettered colour codes missed the two-colour transition glyphs whose **left**
   half is a letter (`vmv-a-5`) and the letter-to-letter ones (`vmv-a-b`), so two
   adjacent macaron cells referenced a glyph that did not exist and the crossing

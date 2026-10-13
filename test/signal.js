@@ -197,7 +197,9 @@ describe('signal', function () {
             { signal: [
                 { name: 'letters', wave: 'x.axbxcxefgx', data: 'a b c e f g' },
                 { name: 'mix',     wave: 'x.5xaxb7x',    data: '5 a b 7' },
-                { name: 'digits',  wave: 'x.5x6x7x892x', data: '5 6 7 8 9 2' }
+                { name: 'digits',  wave: 'x.5x6x7x892x', data: '5 6 7 8 9 2' },
+                // equal neighbours: 'x.55x' uses vmv-5-5, so 'x.ccx' needs vmv-c-c
+                { name: 'equal',   wave: 'x.axbxccefgx', data: 'a b c e f g' }
             ]}, waveSkin
         );
         var ids = collect(svg, []).map(function (n) { return n[1].id; });
