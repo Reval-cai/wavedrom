@@ -11,7 +11,7 @@
 > ### 非官方分支 / Unofficial fork
 >
 > **中文** — 本仓库是 [WaveDrom](https://github.com/wavedrom/wavedrom) 的**非官方分支**，基于上游
-> **3.7.0**（`trunk` @ `142dd41`），由 **Deerczl** 维护。它与原作者 Aliaksei Chapyzhenka 及
+> **3.7.0**（`trunk` @ `142dd41`），由 **Reval-cai** 维护。它与原作者 Aliaksei Chapyzhenka 及
 > WaveDrom 项目**无从属关系，也未获其背书**：请勿把本分支的问题反馈给上游，也请勿以原作者名义
 > 宣传本分支。
 >
@@ -27,7 +27,7 @@
 >
 > **English** — This repository is an **unofficial fork** of
 > [WaveDrom](https://github.com/wavedrom/wavedrom), based on upstream **3.7.0**
-> (`trunk` @ `142dd41`) and maintained by **Deerczl**. It is **not affiliated with,
+> (`trunk` @ `142dd41`) and maintained by **Reval-cai**. It is **not affiliated with,
 > nor endorsed by** the original author or the WaveDrom project: please do not
 > report this fork's issues upstream, and do not present it as the original work.
 >
