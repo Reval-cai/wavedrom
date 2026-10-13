@@ -189,6 +189,57 @@ describe('signal', function () {
         expect(nodeById(svg, 'wavelane_draw_0_0')[1]['clip-path']).to.equal(undefined);
         done();
     });
+    it('every referenced brick glyph exists', function (done) {
+        // an adjacent pair of macaron colours needs a two-colour transition glyph
+        // ('vmv-a-b'). If the clone step misses it, the reference dangles and the
+        // transition block comes out blank - "only the middle colour, no crossing".
+        var svg = renderAny(0,
+            { signal: [
+                { name: 'letters', wave: 'x.axbxcxefgx', data: 'a b c e f g' },
+                { name: 'mix',     wave: 'x.5xaxb7x',    data: '5 a b 7' },
+                { name: 'digits',  wave: 'x.5x6x7x892x', data: '5 6 7 8 9 2' }
+            ]}, waveSkin
+        );
+        var ids = collect(svg, []).map(function (n) { return n[1].id; });
+        var refs = [];
+        (function walk (node) {
+            if (!Array.isArray(node)) { return; }
+            if (node[0] === 'use' && node[1] && node[1]['xlink:href']) {
+                refs.push(node[1]['xlink:href'].replace('#', ''));
+            }
+            for (var i = 2; i < node.length; i += 1) { walk(node[i]); }
+        })(svg);
+        expect(refs.length).to.be.above(20);
+        refs.forEach(function (ref) {
+            expect(ids).to.include(ref);
+        });
+
+        // the two-colour bricks paint the right half first and the left half
+        // second, exactly like the numeric bricks they were cloned from
+        var halvesOf = function (id) {
+            var node = nodeById(svg, id);
+            return node.slice(2, 4).map(function (n) { return n[1].class; });
+        };
+        expect(halvesOf('vmv-a-b')).to.deep.equal(['mc-b', 'mc-a']);
+        expect(halvesOf('vmv-b-a')).to.deep.equal(['mc-a', 'mc-b']);
+        // letter-to-digit and digit-to-letter put the letter on opposite sides
+        expect(halvesOf('vmv-a-5')[1]).to.equal('mc-a');
+        expect(halvesOf('vmv-5-a')[0]).to.equal('mc-a');
+        expect(halvesOf('vmv-a-5')[0]).to.equal(halvesOf('vmv-5-a')[1]);
+
+        // ...and a lettered lane is drawn with exactly the shapes of the numeric
+        // one, only the colour codes differ
+        var shapeOf = function (lane) {
+            var node = nodeById(svg, 'wavelane_draw_' + lane + '_0');
+            return node.slice(2).filter(function (n) {
+                return Array.isArray(n) && n[0] === 'use';
+            }).map(function (n) {
+                return n[1]['xlink:href'].replace('#', '').replace(/[2-9abcefg]/g, 'X');
+            });
+        };
+        expect(shapeOf(0)).to.deep.equal(shapeOf(2));
+        done();
+    });
     it('cursor', function (done) {
         var svg = renderAny(0,
             {

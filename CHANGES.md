@@ -1,4 +1,4 @@
-# Changes in this fork — 3.7.1-dsh
+# Changes in this fork — 3.7.2-dsh
 
 Based on upstream `wavedrom/wavedrom` 3.7.0 (`trunk` @ `142dd41`). Licence stays
 MIT; the items below are the only differences from upstream.
@@ -49,6 +49,12 @@ config: { cursor: [
 
 ## Fixed
 
+* Lettered colour codes missed the two-colour transition glyphs whose **left**
+  half is a letter (`vmv-a-5`) and the letter-to-letter ones (`vmv-a-b`), so two
+  adjacent macaron cells referenced a glyph that did not exist and the crossing
+  block between them was not drawn at all. All ordered pairs with a letter on
+  either side are generated now, and a test asserts that every glyph referenced
+  by a lane exists in the skin.
 * `find-lane-markers.js` only recognised `vvv-2` .. `vvv-9` as value cells, so
   `data` labels on lettered cells were misplaced. The test is pattern based now.
 * `dist.min` used a POSIX `/dev/null` redirect inside
