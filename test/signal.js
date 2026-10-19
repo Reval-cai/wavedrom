@@ -242,6 +242,48 @@ describe('signal', function () {
         expect(shapeOf(0)).to.deep.equal(shapeOf(2));
         done();
     });
+    it('lettered colour at the start of a wave', function (done) {
+        // The first brick has its own lookup table (gen-first-wave-brick.js). A
+        // leading letter must render the same value box a leading digit gets -
+        // before the fix it fell through to the 'unknown' default and the whole
+        // first cell was drawn as a hatched block.
+        var svg = renderAny(0,
+            { signal: [
+                { name: 'L1', wave: 'a.......' },
+                { name: 'D1', wave: '3.......' },
+                { name: 'L2', wave: 'ab......' },
+                { name: 'D2', wave: '34......' },
+                { name: 'L3', wave: 'axb.....' },
+                { name: 'D3', wave: '3x4.....' }
+            ]}, waveSkin
+        );
+        var firstUse = function (lane) {
+            var node = nodeById(svg, 'wavelane_draw_' + lane + '_0');
+            var use = node.slice(2).filter(function (n) {
+                return Array.isArray(n) && n[0] === 'use';
+            })[0];
+            return use[1]['xlink:href'].replace('#', '');
+        };
+        expect(firstUse(0)).to.equal('vvv-a');
+        expect(firstUse(1)).to.equal('vvv-3');
+        expect(firstUse(2)).to.equal('vvv-a');
+        expect(firstUse(3)).to.equal('vvv-3');
+        expect(firstUse(4)).to.equal('vvv-a');
+        expect(firstUse(5)).to.equal('vvv-3');
+
+        var shapeOf = function (lane) {
+            var node = nodeById(svg, 'wavelane_draw_' + lane + '_0');
+            return node.slice(2).filter(function (n) {
+                return Array.isArray(n) && n[0] === 'use';
+            }).map(function (n) {
+                return n[1]['xlink:href'].replace('#', '').replace(/[2-9abcefg]/g, 'X');
+            });
+        };
+        expect(shapeOf(0)).to.deep.equal(shapeOf(1));
+        expect(shapeOf(2)).to.deep.equal(shapeOf(3));
+        expect(shapeOf(4)).to.deep.equal(shapeOf(5));
+        done();
+    });
     it('cursor', function (done) {
         var svg = renderAny(0,
             {
