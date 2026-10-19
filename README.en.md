@@ -1,4 +1,4 @@
-# WaveDrom 3.7.3-dsh
+# WaveDrom 3.7.4-dsh
 
 [中文](README.md) | **English**
 
@@ -125,12 +125,15 @@ grammar's "don't care" brick.
 
 | Defect | Notes | Fixed in |
 |---|---|---|
+| A leading lettered colour rendered as unknown | the first-brick lookup table (`gen-first-wave-brick.js`) had the numeric codes but not `a b c e f g`, so it fell through to `default: 'xxx'` - the first cell became a hatched block and its `data` label vanished | 3.7.4-dsh |
 | Misplaced `data` labels on lettered cells | `find-lane-markers.js` only recognised `vvv-2`…`vvv-9`, so lettered cells were not treated as data cells | 3.7.1-dsh |
 | `dist.min` fails on Windows | the POSIX `/dev/null` redirect inside `execSync` always fails under `cmd.exe` | 3.7.1-dsh |
 | Missing letter↔letter / letter→digit transitions | only `-3`-suffixed templates were cloned, so `vmv-a-b` and `vmv-a-5` did not exist and **the crossing block between two adjacent macaron colours was blank** | 3.7.2-dsh |
-| Missing equal-neighbour letter connector | numeric codes use `vmv-5-5` between equal neighbours; the lettered `vmv-c-c` was not generated, so `x.ccx` was blank too | 3.7.3-dsh |
+| Missing equal-neighbour letter connector | numeric codes use `vmv-5-5` between equal neighbours; the lettered `vmv-c-c` was not generated, so `x.ccx` was blank too | 3.7.4-dsh |
 
-> **Upgrade note**: `3.7.1-dsh` and `3.7.2-dsh` have incomplete glyph families — use **`3.7.3-dsh`**
+> **Upgrade note**: `3.7.1-dsh`/`3.7.2-dsh` have incomplete glyph families, and
+> `3.7.1`–`3.7.3` render a wave that *starts* with a lettered colour as unknown.
+> Use **`3.7.4-dsh`** or newer.
 > or newer.
 
 ---
@@ -153,7 +156,7 @@ grammar's "don't care" brick.
 
 * From upstream `3.7.0`: drop-in. Documents that do not use the new fields behave the same (apart
   from the internal coordinate precision, which does not affect rendering).
-* From this fork's `3.7.1-dsh` / `3.7.2-dsh`: go to `3.7.3-dsh`+ — those two have incomplete
+* From this fork's `3.7.1-dsh` / `3.7.2-dsh`: go to `3.7.4-dsh`+ — those two have incomplete
   lettered glyph families.
 * The old `latency: 6` (once interpreted as bricks → effectively no movement) now means 6 % of a
   period.
@@ -166,7 +169,7 @@ grammar's "don't care" brick.
 
 ```sh
 # this fork
-npm install Reval-cai/wavedrom#v3.7.3-dsh
+npm install Reval-cai/wavedrom#v3.7.4-dsh
 
 # or download the prebuilt wavedrom.min.js / wavedrom.js / wavedrom.unpkg*.js from Releases
 ```
@@ -237,6 +240,7 @@ Fork-specific notes:
 
 | Version | Content |
 |---|---|
+| `v3.7.4-dsh` | 🔧 a leading lettered colour code (first-brick table); publishes the complete `demo.json` |
 | `v3.7.3-dsh` | 🔧 equal-neighbour letter connector (`x.ccx`) |
 | `v3.7.2-dsh` | 🔧 letter↔letter / letter→digit transitions |
 | `v3.7.1-dsh` | 🟩 `latency`, `config.cursor`, lettered codes `a b c e f g`; 🔧 labels and the Windows build |

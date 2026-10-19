@@ -1,4 +1,4 @@
-# WaveDrom 3.7.3-dsh
+# WaveDrom 3.7.4-dsh
 
 **中文** | [English](README.en.md)
 
@@ -117,12 +117,13 @@ config: { cursor: [
 
 | 问题 | 说明 | 修复版本 |
 |---|---|---|
+| 字母开头的色码被画成未知块 | 首砖块查找表（`gen-first-wave-brick.js`）没有 `a b c e f g`，落到 `default: 'xxx'` → 第一个格子变斜线块、其上的 `data` 标签消失 | 3.7.4-dsh |
 | 字母格上的 `data` 标注错位 | `find-lane-markers.js` 原来硬编码只认 `vvv-2`…`vvv-9`，字母格不算数据格 | 3.7.1-dsh |
 | `dist.min` 在 Windows 上失败 | `execSync` 里的 POSIX `/dev/null` 重定向在 `cmd.exe` 下必然失败 | 3.7.1-dsh |
 | 字母↔字母 / 字母→数字 过渡格缺失 | 只克隆了 id 以 `-3` 结尾的模板，导致 `vmv-a-b`、`vmv-a-5` 不存在，**相邻两个马卡龙色之间的交叉块整块画不出来** | 3.7.2-dsh |
-| 同色相邻的字母相连格缺失 | 数字码在相邻同值时用 `vmv-5-5` 连接格，字母的 `vmv-c-c` 没生成 → `x.ccx` 同样空白 | 3.7.3-dsh |
+| 同色相邻的字母相连格缺失 | 数字码在相邻同值时用 `vmv-5-5` 连接格，字母的 `vmv-c-c` 没生成 → `x.ccx` 同样空白 | 3.7.4-dsh |
 
-> **升级建议**：`3.7.1-dsh` 与 `3.7.2-dsh` 的字形家族不完整，请使用 **`3.7.3-dsh`** 或更新版本。
+> **升级建议**：`3.7.1-dsh`/`3.7.2-dsh` 字形家族不完整；`3.7.1`–`3.7.3` 会把「波形开头的字母色码」画成未知块。请使用 **`3.7.4-dsh`** 或更新版本。
 
 ---
 
@@ -144,7 +145,7 @@ config: { cursor: [
 
 * 从上游 `3.7.0` 升级：直接替换即可，未使用新字段的文档行为不变（除上面「内部坐标精度」一项，
   它不影响渲染结果）。
-* 从本分支 `3.7.1-dsh` / `3.7.2-dsh` 升级：建议升到 `3.7.3-dsh`+，那两版在字母色码上有字形缺失的缺陷。
+* 从本分支 `3.7.1-dsh` / `3.7.2-dsh` 升级：建议升到 `3.7.4-dsh`+，那两版在字母色码上有字形缺失的缺陷。
 * 旧写法 `latency: 6`（曾经被当成 6 砖块 → 实际不动）现在的语义是 6% 周期。
 
 ---
@@ -155,7 +156,7 @@ config: { cursor: [
 
 ```sh
 # 本分支
-npm install Reval-cai/wavedrom#v3.7.3-dsh
+npm install Reval-cai/wavedrom#v3.7.4-dsh
 
 # 或直接下载 Releases 里构建好的 wavedrom.min.js / wavedrom.js / wavedrom.unpkg*.js
 ```
@@ -223,6 +224,7 @@ npx wavedrom -i source.json5 | npx @resvg/resvg-js-cli - output.png
 
 | 版本 | 内容 |
 |---|---|
+| `v3.7.4-dsh` | 🔧 字母开头的色码（首砖块查找表）；发布完整示例 `demo.json` |
 | `v3.7.3-dsh` | 🔧 同色相邻字母相连格（`x.ccx`） |
 | `v3.7.2-dsh` | 🔧 字母↔字母 / 字母→数字 过渡格 |
 | `v3.7.1-dsh` | 🟩 `latency`、`config.cursor`、字母色码 `a b c e f g`；🔧 标注与 Windows 构建 |

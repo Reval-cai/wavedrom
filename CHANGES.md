@@ -1,4 +1,4 @@
-# Changes in this fork — 3.7.3-dsh
+# Changes in this fork — 3.7.4-dsh
 
 Based on upstream `wavedrom/wavedrom` 3.7.0 (`trunk` @ `142dd41`). Licence stays
 MIT; the items below are the only differences from upstream.
@@ -49,6 +49,12 @@ config: { cursor: [
 
 ## Fixed
 
+* A wave that **starts** with a lettered colour code (`a.......`, `ab......`,
+  `axb.....`) rendered its first cell as the "unknown" hatched block: the
+  first-brick lookup table (`gen-first-wave-brick.js`) listed the numeric codes
+  but not `a b c e f g`, so it fell through to `default: 'xxx'`. A `data` label
+  on that first cell disappeared as well. The letters are registered now, so a
+  leading lettered code matches a leading numeric one.
 * Equal neighbouring letters (`x.ccx`, e.g. `x.axbxccefgx`) missed the `vmv-c-c`
   connector glyph - the numeric codes use `vmv-5-5` there and the skin has it.
   Equal pairs are cloned from the skin's own equal-pair template now, so `x.ccx`
