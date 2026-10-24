@@ -284,6 +284,47 @@ describe('signal', function () {
         expect(shapeOf(4)).to.deep.equal(shapeOf(5));
         done();
     });
+    it('clock or edge followed by the same level has no glitch', function (done) {
+        // 'p0' means "one clock pulse, then stay low": the clock already ended low, so
+        // there is no transition to draw. Upstream emitted the '0m0' / '1m1' glyphs
+        // here, which draw a small notch in the line.
+        var svg = renderAny(0,
+            { signal: [
+                { name: 'a', wave: 'p0......' },
+                { name: 'b', wave: 'n1......' },
+                { name: 'c', wave: 'h1......' },
+                { name: 'd', wave: 'l0......' },
+                { name: 'e', wave: 'p1......' },
+                { name: 'f', wave: 'n0......' },
+                { name: 'g', wave: 'l0......' }
+            ]}, waveSkin
+        );
+        var useList = function (lane) {
+            var node = nodeById(svg, 'wavelane_draw_' + lane + '_0');
+            return node.slice(2).filter(function (n) {
+                return Array.isArray(n) && n[0] === 'use';
+            }).map(function (n) { return n[1]['xlink:href'].replace('#', ''); });
+        };
+        var uniq = function (arr) {
+            return arr.filter(function (v, i) { return arr.indexOf(v) === i; });
+        };
+        // the glitch glyphs must not be referenced at all
+        var text = JSON.stringify(svg);
+        expect(text).to.not.include('#0m0');
+        expect(text).to.not.include('#1m1');
+        // p0 / n1 / h1 / l0 hold their level after the leading edge
+        [[0, '000'], [1, '111'], [2, '111'], [3, '000']].forEach(function (pair) {
+            var rest = useList(pair[0]).slice(2);
+            expect(rest.length).to.be.above(10);
+            expect(uniq(rest)).to.deep.equal([pair[1]]);
+        });
+        // a real level change still gets its transition glyph
+        expect(useList(4).slice(2, 4)).to.deep.equal(['0m1', '111']);   // p1 rises
+        expect(useList(5).slice(2, 4)).to.deep.equal(['1m0', '000']);   // n0 falls
+        // '.' repeating a level stays flat as well
+        expect(uniq(useList(6).slice(2))).to.deep.equal(['000']);
+        done();
+    });
     it('cursor', function (done) {
         var svg = renderAny(0,
             {
